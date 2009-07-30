@@ -63,7 +63,7 @@ describe "FireEagle" do
     it "should require #get_request_token be called before #convert_to_access_token" do
       lambda do
         client = FireEagle::Client.new(:consumer_key => 'key', :consumer_secret => 'sekret')
-        client.convert_to_access_token
+        client.convert_to_access_token("oauth-verifier-from-authorized-callback")
       end.should raise_error(FireEagle::ArgumentError)
     end
 
@@ -85,7 +85,7 @@ describe "FireEagle" do
       client.should_receive(:consumer).and_return(consumer)
 
       client.get_request_token
-      client.convert_to_access_token
+      client.convert_to_access_token("oauth-verifier-from-authorized-callback")
       client.access_token.should == acc_token
     end
 
